@@ -1,0 +1,7 @@
+name: LiteBansStatsPlugin
+version: "1.0"
+main: nl.nopermission.litebansplaceholders.LiteBansStatsPlugin
+author: "NoPermission"
+depend:
+  - PlaceholderAPI
+  - LiteBans

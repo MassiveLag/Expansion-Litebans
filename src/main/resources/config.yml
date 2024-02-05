@@ -1,0 +1,6 @@
+#To get active counts of punishments
+#Those are the placeholders: %litebans_stats_<type>% %litebans_stats_<type>_active% %litebans_stats_<type>_inactive%
+#the types are: bans, kicks, warnings, mutes
+
+#cacheRefresh is an option to reload the counts each x seconds. You don't want to spam the database every time when requesting placeholder.
+cacheRefresh: 10 #seconds
