@@ -5,7 +5,7 @@ plugins {
 }
 
 group = "nl.nopermission.litebansplaceholders"
-version = "1.0-SNAPSHOT"
+version = "1.0.2"
 
 repositories {
     mavenCentral()

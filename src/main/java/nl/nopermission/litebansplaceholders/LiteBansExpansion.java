@@ -15,9 +15,7 @@ import org.jetbrains.annotations.NotNull;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.Map;
-import java.util.Optional;
-import java.util.UUID;
+import java.util.*;
 import java.util.concurrent.CompletableFuture;
 import java.util.concurrent.TimeUnit;
 
@@ -42,6 +40,8 @@ public class LiteBansExpansion extends PlaceholderExpansion implements Cacheable
         return "1.0.1";
     }
 
+    public final List<String> types = new ArrayList<>();
+
     @Override
     public boolean canRegister() {
         int refresh = 25;
@@ -52,6 +52,11 @@ public class LiteBansExpansion extends PlaceholderExpansion implements Cacheable
         cache = CacheBuilder.newBuilder()
                 .expireAfterWrite(refresh, TimeUnit.SECONDS)
                 .build();
+
+        types.add("bans");
+        types.add("mutes");
+        types.add("warnings");
+        types.add("kicks");
 
         return hasPlugin("LiteBans");
     }
@@ -97,6 +102,9 @@ public class LiteBansExpansion extends PlaceholderExpansion implements Cacheable
                     return "0";
                 }
             }
+
+            if (types.stream().filter(s -> s.equalsIgnoreCase(type)).findAny().isEmpty())
+                return "Type is not correct!";
 
             if (identifier.equalsIgnoreCase("stats_" + type + (own ? "_own" : ""))) {
                 Optional<Object> cacheObject = fromCache(keyToSave);
