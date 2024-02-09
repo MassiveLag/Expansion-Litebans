@@ -144,6 +144,18 @@
       <option name="presentableId" value="Default" />
       <updated>1707043090587</updated>
     </task>
+    <task id="LOCAL-00001" summary="Fixed MySQL NPE when using wrong type!">
+      <created>1707128295020</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1707128295020</updated>
+    </task>
+    <option name="localTasksCounter" value="2" />
     <servers />
+  </component>
+  <component name="VcsManagerConfiguration">
+    <MESSAGE value="Fixed MySQL NPE when using wrong type!" />
+    <option name="LAST_COMMIT_MESSAGE" value="Fixed MySQL NPE when using wrong type!" />
   </component>
 </project>

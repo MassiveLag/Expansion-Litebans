@@ -89,11 +89,17 @@ public class LiteBansExpansion extends PlaceholderExpansion implements Cacheable
                     return "" + getAsLong(cacheObject.get());
                 else {
                     getPlaceholderAPI().getServer().getScheduler().runTaskAsynchronously(getPlaceholderAPI(), () -> {
-                        String query = "SELECT SUM(total.count) FROM (SELECT COUNT(*) count FROM {bans} UNION ALL SELECT COUNT( * ) AS count FROM {mutes} UNION ALL SELECT COUNT( * ) AS count FROM {kicks} UNION ALL SELECT COUNT( * ) AS count FROM {warnings}) total;";
-                        try (PreparedStatement st = database.prepareStatement(query);
-                             ResultSet rs = st.executeQuery()) {
-                            if (rs.next()) {
-                                cache(keyToSave, rs.getLong(1));
+                        String query = "SELECT SUM(total.count) FROM (SELECT COUNT(*) count FROM {bans}" + (own ? " WHERE uuid=? " : " ") + "UNION ALL SELECT COUNT( * ) AS count FROM {mutes}" + (own ? " WHERE uuid=? " : " ") + "UNION ALL SELECT COUNT( * ) AS count FROM {kicks}" +(own ? " WHERE uuid=? " : " ")+ "UNION ALL SELECT COUNT( * ) AS count FROM {warnings} " + (own ? " WHERE uuid=? " : " ") + ") total;";
+                        try (PreparedStatement st = database.prepareStatement(query)) {
+                            if (own) {
+                                st.setString(1, uniqueId.toString());
+                                st.setString(1, uniqueId.toString());
+                                st.setString(1, uniqueId.toString());
+                                st.setString(1, uniqueId.toString());
+                            }
+                            try (ResultSet rs = st.executeQuery()) {
+                                if (rs.next())
+                                    cache(keyToSave, rs.getLong(1));
                             }
                         } catch (SQLException e) {
                             e.printStackTrace();
@@ -173,20 +179,6 @@ public class LiteBansExpansion extends PlaceholderExpansion implements Cacheable
                 }
             }
         }
-
-        if (identifier.equalsIgnoreCase("test"))
-            getPlaceholderAPI().getServer().getScheduler().runTaskAsynchronously(getPlaceholderAPI(), () -> {
-                String query = "SELECT SUM(total.count) FROM (SELECT COUNT(*) count FROM {bans} UNION ALL SELECT COUNT( * ) AS count FROM {mutes} UNION ALL SELECT COUNT( * ) AS count FROM {kicks} UNION ALL SELECT COUNT( * ) AS count FROM {warnings}) total;";
-                try (PreparedStatement st = database.prepareStatement(query);
-                     ResultSet rs = st.executeQuery()) {
-                    if (rs.next()) {
-                        System.out.println(rs.getLong(1));
-                    }
-                } catch (SQLException e) {
-                    e.printStackTrace();
-                }
-            });
-
         return "ERROR";
     }
 
