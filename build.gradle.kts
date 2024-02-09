@@ -9,12 +9,14 @@ version = "1.0.4"
 
 repositories {
     mavenCentral()
-    maven("https://papermc.io/repo/repository/maven-public/")
+    maven { url = uri("https://hub.spigotmc.org/nexus/content/repositories/snapshots/") }
+    maven { url = uri("https://oss.sonatype.org/content/repositories/snapshots") }
+    maven { url = uri("https://oss.sonatype.org/content/repositories/central") }
     maven { url = uri("https://repo.extendedclip.com/content/repositories/placeholderapi")}
     maven(url = "https://jitpack.io")
 }
 dependencies {
-    compileOnly("io.papermc.paper:paper-api:1.19.4-R0.1-SNAPSHOT")
+    compileOnly("org.spigotmc:spigot-api:1.20.4-R0.1-SNAPSHOT")
     compileOnly(fileTree(mapOf("dir" to "libs", "include" to listOf("*.jar"))))
     compileOnly("me.clip:placeholderapi:2.11.5")
 }
@@ -22,6 +24,11 @@ dependencies {
 tasks {
     compileJava {
         options.encoding = "UTF-8"
+    }
+
+    java {
+        sourceCompatibility = JavaVersion.VERSION_1_8
+        targetCompatibility = JavaVersion.VERSION_1_8
     }
 
     shadowJar {
