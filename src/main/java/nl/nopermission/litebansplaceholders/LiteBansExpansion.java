@@ -109,7 +109,7 @@ public class LiteBansExpansion extends PlaceholderExpansion implements Cacheable
                 }
             }
 
-            if (types.stream().filter(s -> s.equalsIgnoreCase(type)).findAny().isEmpty())
+            if (types.stream().noneMatch(s -> s.equalsIgnoreCase(type)))
                 return "Type is not correct!";
 
             if (identifier.equalsIgnoreCase("stats_" + type + (own ? "_own" : ""))) {
